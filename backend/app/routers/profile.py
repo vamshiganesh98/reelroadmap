@@ -13,7 +13,14 @@ router = APIRouter()
 def _get_or_create_profile(db: Session) -> UserProfile:
     profile = db.query(UserProfile).first()
     if not profile:
-        profile = UserProfile(instagram_sources="jam.with.ai")
+        profile = UserProfile(
+            instagram_sources="jam.with.ai",
+            skill_level="intermediate",
+            learning_goals=(
+                "Grow as a hands-on AI engineer. Turn @jam.with.ai reels into projects, "
+                "not just theory. Some Python background."
+            ),
+        )
         db.add(profile)
         db.commit()
         db.refresh(profile)

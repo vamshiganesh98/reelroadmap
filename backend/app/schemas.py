@@ -65,9 +65,11 @@ class RoadmapDashboard(BaseModel):
     total_reels: int
     processed_reels: int
     topics: list[RoadmapItem]
+    hands_on_tasks: list[str]
     recent_reels: list[ReelResponse]
     skill_level: str
     billing_mode: Literal["free", "openai"]
+    primary_source: str = "jam.with.ai"
 
 
 class InstagramSyncRequest(BaseModel):

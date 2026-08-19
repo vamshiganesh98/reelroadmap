@@ -34,9 +34,11 @@ export interface RoadmapDashboard {
   total_reels: number;
   processed_reels: number;
   topics: RoadmapItem[];
+  hands_on_tasks: string[];
   recent_reels: Reel[];
   skill_level: string;
   billing_mode: "free" | "openai";
+  primary_source?: string;
 }
 
 export interface HealthStatus {

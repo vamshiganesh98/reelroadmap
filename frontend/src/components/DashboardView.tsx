@@ -28,6 +28,9 @@ export default function DashboardView({ dashboard, reels, onSelectReel }: Dashbo
       {dashboard && dashboard.topics.length > 0 && (
         <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-900">Learning Roadmap</h2>
+          <p className="mt-1 text-sm text-slate-500">
+            Topics building up from @{dashboard.primary_source ?? "jam.with.ai"} reels
+          </p>
           <div className="mt-4 space-y-3">
             {dashboard.topics.map((item) => (
               <div
@@ -51,6 +54,26 @@ export default function DashboardView({ dashboard, reels, onSelectReel }: Dashbo
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {dashboard && dashboard.hands_on_tasks.length > 0 && (
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5 shadow-sm">
+          <h2 className="text-lg font-semibold text-emerald-900">Hands-on Tasks</h2>
+          <p className="mt-1 text-sm text-emerald-700">
+            Do these — not just watch more reels. Theory becomes skill when you build.
+          </p>
+          <ul className="mt-4 space-y-2">
+            {dashboard.hands_on_tasks.map((task, i) => (
+              <li
+                key={i}
+                className="flex gap-3 rounded-lg border border-emerald-100 bg-white px-4 py-3 text-sm text-slate-700"
+              >
+                <span className="font-semibold text-emerald-600">{i + 1}.</span>
+                <span>{task}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

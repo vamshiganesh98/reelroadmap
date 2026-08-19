@@ -40,12 +40,25 @@ def roadmap_dashboard(db: Session = Depends(get_db)) -> RoadmapDashboard:
 
     profile = db.query(UserProfile).first()
     skill_level = profile.skill_level if profile else "beginner"
+    primary_source = profile.instagram_sources.split(",")[0].strip() if profile else "jam.with.ai"
+
+    hands_on: list[str] = []
+    seen_tasks: set[str] = set()
+    for reel in processed:
+        for item in [a for a in reel.action_items.split("\n") if a.strip()]:
+            if item not in seen_tasks:
+                seen_tasks.add(item)
+                hands_on.append(item)
+        if len(hands_on) >= 8:
+            break
 
     return RoadmapDashboard(
         total_reels=len(reels),
         processed_reels=len(processed),
         topics=topics,
+        hands_on_tasks=hands_on[:8],
         recent_reels=[ReelResponse(**reel_to_dict(r)) for r in reels[:5]],
         skill_level=skill_level,
         billing_mode=settings.billing_mode,
+        primary_source=primary_source,
     )
