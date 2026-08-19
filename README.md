@@ -4,6 +4,15 @@ Learn AI from Instagram reels using captions, optional Whisper transcription, an
 
 Turn Instagram reels into a personalized AI learning roadmap. ReelRoadmap syncs reels from Instagram (default: [@jam.with.ai](https://www.instagram.com/jam.with.ai)), analyzes captions (with optional Whisper transcription), and builds a topic-based learning path.
 
+## Live app (no laptop needed)
+
+| | URL |
+|---|---|
+| **Web app** | https://vamshiganesh98.github.io/reelroadmap/ |
+| **API** | https://reelroadmap-api.onrender.com |
+
+Setup: [DEPLOY.md](DEPLOY.md) · First run: [GETTING_STARTED.md](GETTING_STARTED.md)
+
 ## Features
 
 - **Instagram Graph API sync** — pull reels from configured accounts (default: `jam.with.ai`)
