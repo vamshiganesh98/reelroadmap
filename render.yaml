@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: reelroadmap-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: BILLING_MODE
+        value: free
+      - key: INSTAGRAM_SYNC_USERNAMES
+        value: jam.with.ai
+      - key: PYTHON_VERSION
+        value: "3.12.0"
