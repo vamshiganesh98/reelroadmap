@@ -366,10 +366,10 @@ export function isCapstoneUnlocked(cap: CapstoneContent, completedNodes: string[
 }
 
 export function getLevelTitle(completedNodes: number): string {
-  if (completedNodes >= 38) return 'Pro Agentic AI Engineer'
-  if (completedNodes >= 28) return 'Senior Builder'
-  if (completedNodes >= 18) return 'Agentic AI Engineer'
-  if (completedNodes >= 10) return 'LLM App Developer'
+  if (completedNodes >= 39) return 'Pro Agentic AI Engineer'
+  if (completedNodes >= 30) return 'Senior Builder'
+  if (completedNodes >= 20) return 'Agentic AI Engineer'
+  if (completedNodes >= 12) return 'LLM App Developer'
   if (completedNodes >= 5) return 'Python AI Beginner'
   return 'Fresh Starter'
 }
