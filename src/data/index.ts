@@ -1,6 +1,7 @@
 import type { CapstoneContent, NodeContent, WorldContent } from '../types/content'
 import { world1Nodes } from './world1'
 import { world2Nodes } from './world2'
+import { world5Nodes } from './world5'
 
 function scaffoldNode(
   id: string,
@@ -105,12 +106,15 @@ export const worlds: WorldContent[] = [
     ['w4-n4', 'Structured Outputs', '📋'],
     ['w4-n5', 'World 4 Project: Prompt App', '🏁'],
   ]),
-  scaffoldWorld('w5', 5, 'RAG', 'Chat with your documents', '📚', 'from-rose-500 to-pink-600', [
-    ['w5-n1', 'Embeddings Explained', '🧲'],
-    ['w5-n2', 'Chunk & Store Text', '📄'],
-    ['w5-n3', 'Retrieve & Generate', '🔍'],
-    ['w5-n4', 'World 5 Project: Doc Chatbot', '🏁'],
-  ]),
+  {
+    id: 'w5',
+    number: 5,
+    title: 'RAG',
+    subtitle: 'Chat with your documents',
+    emoji: '📚',
+    color: 'from-rose-500 to-pink-600',
+    nodes: world5Nodes,
+  },
   scaffoldWorld('w6', 6, 'AI Agents', 'Tools & multi-step reasoning', '🤖', 'from-indigo-500 to-blue-600', [
     ['w6-n1', 'What Is an Agent?', '🎭'],
     ['w6-n2', 'Tool Calling', '🔧'],
