@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react'
 import {
   allNodeIds,
   capstones,
+  getLevelTitle,
   getNode,
   getOrderedNodeIds,
   isCapstoneUnlocked,
@@ -9,12 +10,13 @@ import {
 } from '../data'
 import type { ProgressState, StepKind } from '../types/content'
 import {
+  completeCapstone as completeCapstoneFn,
   completeStep as completeStepFn,
   getNextNodeId,
   getNodeProgress,
   loadProgress,
   resetProgress as resetFn,
-  saveProgress,
+  toggleCapstoneChecklistItem as toggleChecklistFn,
   totalProgress,
 } from './useProgress'
 
@@ -23,25 +25,24 @@ export function useProgress() {
 
   const refresh = useCallback(() => setProgress(loadProgress()), [])
 
-  const completeStep = useCallback(
-    (nodeId: string, step: StepKind) => {
-      const next = completeStepFn(nodeId, step)
+  const completeStep = useCallback((nodeId: string, step: StepKind) => {
+    const next = completeStepFn(nodeId, step)
+    setProgress(next)
+    return next
+  }, [])
+
+  const completeCapstone = useCallback((capstoneId: string) => {
+    const next = completeCapstoneFn(capstoneId)
+    setProgress(next)
+  }, [])
+
+  const toggleCapstoneChecklistItem = useCallback(
+    (capstoneId: string, milestoneIndex: number, itemIndex: number, totalItems: number) => {
+      const next = toggleChecklistFn(capstoneId, milestoneIndex, itemIndex, totalItems)
       setProgress(next)
-      return next
     },
     [],
   )
-
-  const completeCapstone = useCallback((capstoneId: string) => {
-    const state = loadProgress()
-    if (state.completedCapstones.includes(capstoneId)) return
-    const next: ProgressState = {
-      ...state,
-      completedCapstones: [...state.completedCapstones, capstoneId],
-    }
-    saveProgress(next)
-    setProgress(next)
-  }, [])
 
   const resetProgress = useCallback(() => {
     resetFn()
@@ -74,6 +75,8 @@ export function useProgress() {
       completedNodes: progress.completedNodes.length,
       totalNodes: allNodeIds.length,
       percent: totalProgress(progress, allNodeIds),
+      xp: progress.xp ?? 0,
+      level: getLevelTitle(progress.completedNodes.length),
     }),
     [progress],
   )
@@ -85,6 +88,7 @@ export function useProgress() {
     continueNode,
     completeStep,
     completeCapstone,
+    toggleCapstoneChecklistItem,
     resetProgress,
     isNodeUnlocked,
     getNodeProgress: (nodeId: string) => getNodeProgress(progress, nodeId),

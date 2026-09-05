@@ -1,79 +1,12 @@
-import type { CapstoneContent, NodeContent, WorldContent } from '../types/content'
+import type { CapstoneContent, WorldContent } from '../types/content'
 import { world1Nodes } from './world1'
 import { world2Nodes } from './world2'
+import { world3Nodes } from './world3'
+import { world4Nodes } from './world4'
+import { world5Nodes } from './world5'
 import { world6Nodes } from './world6'
 import { world7Nodes } from './world7'
 import { world8Nodes } from './world8'
-
-function scaffoldNode(
-  id: string,
-  worldId: string,
-  title: string,
-  emoji: string,
-  summary: string,
-): NodeContent {
-  return {
-    id,
-    worldId,
-    title,
-    emoji,
-    summary,
-    scaffolded: true,
-    watch: {
-      videoId: 'rfscVS0vtbw',
-      title: 'Content coming soon',
-      channel: 'TBD',
-      why: 'This node is scaffolded — video will be added in a future update.',
-    },
-    try: {
-      goal: 'Coming soon — interactive exercise will appear here.',
-      starterCode: '# Scaffolded — check back later\n',
-      expectedOutput: 'TBD',
-      hints: ['This world is not built yet. Complete Worlds 1 & 2 first!'],
-      solution: '# Coming soon',
-    },
-    build: {
-      goal: 'Mini-project scaffold — fill in later.',
-      starterCode: '# Scaffolded\n',
-      expectedOutput: 'TBD',
-      hints: ['Complete earlier worlds first.'],
-      solution: '# Coming soon',
-    },
-    check: {
-      questions: [
-        {
-          question: 'This node is a placeholder. What should you do?',
-          options: ['Finish Worlds 1 & 2, then check back', 'Skip all prior worlds', 'Uninstall Python', 'Nothing — it auto-completes'],
-          correctIndex: 0,
-          explanation: 'We scaffolded structure so content can be added incrementally.',
-        },
-      ],
-    },
-  }
-}
-
-function scaffoldWorld(
-  id: string,
-  number: number,
-  title: string,
-  subtitle: string,
-  emoji: string,
-  color: string,
-  nodeTitles: Array<[string, string, string]>,
-): WorldContent {
-  return {
-    id,
-    number,
-    title,
-    subtitle,
-    emoji,
-    color,
-    scaffolded: true,
-    nodes: nodeTitles.map(([nid, t, em], i) =>
-      scaffoldNode(nid, id, t, em, `${title} — node ${i + 1} (coming soon)`),
-    ),
-  }
-}
 
 export const worlds: WorldContent[] = [
   {
@@ -94,31 +27,38 @@ export const worlds: WorldContent[] = [
     color: 'from-violet-500 to-purple-600',
     nodes: world2Nodes,
   },
-  scaffoldWorld('w3', 3, 'Practical ML', 'scikit-learn on real data', '🔬', 'from-blue-500 to-cyan-600', [
-    ['w3-n1', 'Load a Real Dataset', '📂'],
-    ['w3-n2', 'Train/Test Split', '✂️'],
-    ['w3-n3', 'Your First Model', '🎯'],
-    ['w3-n4', 'Metrics That Matter', '📏'],
-    ['w3-n5', 'World 3 Project: Classifier', '🏁'],
-  ]),
-  scaffoldWorld('w4', 4, 'Talking to LLMs', 'Prompts & API calls', '💬', 'from-amber-500 to-orange-600', [
-    ['w4-n1', 'What Is an LLM?', '🤖'],
-    ['w4-n2', 'Write Better Prompts', '✍️'],
-    ['w4-n3', 'Your First API Call', '🔌'],
-    ['w4-n4', 'Structured Outputs', '📋'],
-    ['w4-n5', 'World 4 Project: Prompt App', '🏁'],
-  ]),
-  scaffoldWorld('w5', 5, 'RAG', 'Chat with your documents', '📚', 'from-rose-500 to-pink-600', [
-    ['w5-n1', 'Embeddings Explained', '🧲'],
-    ['w5-n2', 'Chunk & Store Text', '📄'],
-    ['w5-n3', 'Retrieve & Generate', '🔍'],
-    ['w5-n4', 'World 5 Project: Doc Chatbot', '🏁'],
-  ]),
+  {
+    id: 'w3',
+    number: 3,
+    title: 'Practical ML',
+    subtitle: 'scikit-learn on real data',
+    emoji: '🔬',
+    color: 'from-blue-500 to-cyan-600',
+    nodes: world3Nodes,
+  },
+  {
+    id: 'w4',
+    number: 4,
+    title: 'Talking to LLMs',
+    subtitle: 'Prompts, APIs & LangChain basics',
+    emoji: '💬',
+    color: 'from-amber-500 to-orange-600',
+    nodes: world4Nodes,
+  },
+  {
+    id: 'w5',
+    number: 5,
+    title: 'RAG',
+    subtitle: 'LangChain retrieval + doc chatbot',
+    emoji: '📚',
+    color: 'from-rose-500 to-pink-600',
+    nodes: world5Nodes,
+  },
   {
     id: 'w6',
     number: 6,
     title: 'AI Agents',
-    subtitle: 'Tools & multi-step reasoning',
+    subtitle: 'LangChain tools + LangGraph loops',
     emoji: '🤖',
     color: 'from-indigo-500 to-blue-600',
     nodes: world6Nodes,
@@ -136,7 +76,7 @@ export const worlds: WorldContent[] = [
     id: 'w8',
     number: 8,
     title: 'Shipping It',
-    subtitle: 'Deploy, observe, evaluate',
+    subtitle: 'FastAPI, deploy, evals & LangSmith',
     emoji: '🚀',
     color: 'from-fuchsia-500 to-violet-600',
     nodes: world8Nodes,
@@ -149,20 +89,93 @@ export const capstones: CapstoneContent[] = [
     title: 'Document Chatbot (RAG)',
     level: 'beginner',
     emoji: '📖',
-    summary: 'Build a chatbot that answers from YOUR documents — step-by-step milestones.',
+    summary: 'Build a chatbot that answers from YOUR documents using LangChain + a vector store.',
     unlockAfterWorld: 'w5',
-    scaffolded: true,
+    techStack: ['Python', 'LangChain', 'OpenAI Embeddings', 'FAISS or Chroma', 'CLI or Streamlit'],
     milestones: [
-      'Load and chunk your text files',
-      'Create embeddings and a simple vector store',
-      'Retrieve relevant chunks for a question',
-      'Send retrieved context + question to an LLM',
-      'Wrap in a simple CLI or web UI',
+      {
+        title: 'Set up your project',
+        description: 'Create a folder, virtual env, and install langchain, langchain-openai, faiss-cpu (or chromadb).',
+        checklist: [
+          'python -m venv .venv && source .venv/bin/activate',
+          'pip install langchain langchain-openai langchain-community faiss-cpu python-dotenv',
+          'Create .env with OPENAI_API_KEY=sk-...',
+          'Add 2-3 .txt or .md files you want to chat with',
+        ],
+        codeSnippet: `# project structure:
+# rag-bot/
+#   .env
+#   docs/notes.txt
+#   main.py`,
+      },
+      {
+        title: 'Load and chunk documents',
+        description: 'Use LangChain loaders + RecursiveCharacterTextSplitter. Aim for ~500 char chunks with 50 overlap.',
+        checklist: [
+          'Load files from docs/ folder',
+          'Split into chunks with metadata (source filename)',
+          'Print chunk count — should be 10+ for a few pages of text',
+        ],
+        codeSnippet: `from langchain_community.document_loaders import DirectoryLoader, TextLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+loader = DirectoryLoader("docs/", glob="**/*.txt", loader_cls=TextLoader)
+docs = loader.load()
+splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+chunks = splitter.split_documents(docs)
+print(f"{len(chunks)} chunks ready")`,
+      },
+      {
+        title: 'Embed and store in vector DB',
+        description: 'Create embeddings and persist to FAISS so retrieval is fast.',
+        checklist: [
+          'Use OpenAIEmbeddings()',
+          'Build FAISS index from chunks',
+          'Save index to disk (vectorstore.save_local("index"))',
+          'Test: similarity_search("test query", k=3) returns relevant chunks',
+        ],
+        codeSnippet: `from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+
+embeddings = OpenAIEmbeddings()
+vectorstore = FAISS.from_documents(chunks, embeddings)
+vectorstore.save_local("index")`,
+      },
+      {
+        title: 'Build the RAG chain',
+        description: 'Retrieve top-k chunks, stuff into prompt, call LLM.',
+        checklist: [
+          'Create retriever with search_kwargs={"k": 3}',
+          'Use create_stuff_documents_chain + create_retrieval_chain',
+          'Ask 3 test questions — answers must come from YOUR docs',
+        ],
+        codeSnippet: `from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain.chains import create_retrieval_chain
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+
+llm = ChatOpenAI(model="gpt-4o-mini")
+# ... wire retriever + chain (see World 5 node w5-n4)`,
+      },
+      {
+        title: 'Wrap in a simple UI',
+        description: 'CLI loop or Streamlit — something you can demo in 2 minutes.',
+        checklist: [
+          'while True: input question → print answer',
+          'Or: streamlit run app.py with text_input + button',
+          'Record a 60-second screen demo',
+        ],
+        codeSnippet: `while True:
+    q = input("Ask about your docs (q to quit): ")
+    if q == "q": break
+    print(rag_chain.invoke({"input": q})["answer"])`,
+      },
     ],
     rubric: [
       'Answers cite content from your docs (not hallucinated fluff)',
-      'Handles "I don\'t know" when context is missing',
+      'Says "I don\'t know" when context is missing',
       'You can demo it live in under 2 minutes',
+      'Code is in GitHub with a README explaining setup',
     ],
   },
   {
@@ -170,20 +183,73 @@ export const capstones: CapstoneContent[] = [
     title: 'Multi-Step Task Agent',
     level: 'intermediate',
     emoji: '🎯',
-    summary: 'An agent that completes a real task using tools — guided milestones.',
+    summary: 'A LangGraph agent that completes a real task using tools — research, calculate, summarize.',
     unlockAfterWorld: 'w6',
-    scaffolded: true,
+    techStack: ['Python', 'LangGraph', 'LangChain', 'OpenAI', 'Custom tools'],
     milestones: [
-      'Define one concrete task (e.g. research + summarize)',
-      'Give the agent 2-3 tools (search, calculator, file read)',
-      'Implement think → act → observe loop',
-      'Add error handling when tools fail',
-      'Demo completing the task end-to-end',
+      {
+        title: 'Define your task',
+        description: 'Pick ONE concrete task: e.g. "Given a company name, find latest news headline and summarize in 3 bullets."',
+        checklist: [
+          'Write the task in one sentence',
+          'List inputs the user provides',
+          'List the final output format',
+          'Define what "done" looks like',
+        ],
+      },
+      {
+        title: 'Build 2-3 tools',
+        description: 'Start simple: calculator, file_reader, mock_web_search (or real Tavily API).',
+        checklist: [
+          'Each tool has clear name + docstring',
+          '@tool decorator from langchain',
+          'Test each tool independently before wiring to agent',
+        ],
+        codeSnippet: `from langchain_core.tools import tool
+
+@tool
+def calculator(expression: str) -> str:
+    """Evaluate a math expression like '2+2'."""
+    return str(eval(expression))  # use safely in real projects`,
+      },
+      {
+        title: 'LangGraph agent loop',
+        description: 'StateGraph with agent node + tool node + conditional edges.',
+        checklist: [
+          'Define AgentState with messages list',
+          'agent node calls LLM with bind_tools',
+          'tools node executes tool calls',
+          'conditional edge: more tools vs END',
+        ],
+        codeSnippet: `from langgraph.graph import StateGraph, END
+from langgraph.prebuilt import ToolNode
+
+# See World 6 w6-n3 for full pattern`,
+      },
+      {
+        title: 'Add logging and error handling',
+        description: 'Print each tool call and result. Handle tool failures gracefully.',
+        checklist: [
+          'Log: "Calling tool X with args Y"',
+          'If tool fails, return error message to LLM (don\'t crash)',
+          'Set max_iterations to prevent infinite loops',
+        ],
+      },
+      {
+        title: 'End-to-end demo',
+        description: 'Run 3 different inputs and show the agent completing the task without hand-holding.',
+        checklist: [
+          'Demo runs without you typing intermediate steps',
+          'Tool calls visible in logs',
+          'Final output matches your defined format',
+        ],
+      },
     ],
     rubric: [
-      'Agent completes task without you micromanaging each step',
+      'Agent completes task without micromanaging each step',
       'Tool calls are logged and inspectable',
       'Fails gracefully when a tool returns bad data',
+      'Uses LangGraph (not just a while loop hack)',
     ],
   },
   {
@@ -191,21 +257,77 @@ export const capstones: CapstoneContent[] = [
     title: 'End-to-End AI Product',
     level: 'final',
     emoji: '🏆',
-    summary: 'Agent + RAG + deployed API — your portfolio piece.',
+    summary: 'Agent + RAG + FastAPI + deployed live — your portfolio piece.',
     unlockAfterWorld: 'w8',
-    scaffolded: true,
+    techStack: ['FastAPI', 'LangGraph', 'LangChain RAG', 'Render/Railway', 'LangSmith'],
     milestones: [
-      'Pick one problem you actually care about',
-      'Combine RAG retrieval + agent reasoning',
-      'Expose via FastAPI with one clear endpoint',
-      'Deploy to a free host (Render/Railway/Fly)',
-      'Write a 5-line README and record a 60s demo',
+      {
+        title: 'Pick your problem',
+        description: 'Choose something you care about: study assistant, job application helper, hobby wiki bot.',
+        checklist: [
+          'One-sentence problem statement',
+          'Who is the user?',
+          'What input do they give?',
+          'What output do they get?',
+        ],
+      },
+      {
+        title: 'Combine RAG + agent',
+        description: 'RAG for knowledge, agent for multi-step actions (e.g. retrieve → analyze → format response).',
+        checklist: [
+          'RAG retrieves from your docs',
+          'Agent decides when to retrieve vs use tools',
+          'Single entry function: run_agent(query) -> answer',
+        ],
+      },
+      {
+        title: 'FastAPI endpoint',
+        description: 'One clean POST /chat endpoint with Pydantic request/response.',
+        checklist: [
+          'POST /chat with {"message": "..."}',
+          'Returns {"answer": "...", "sources": [...]}',
+          'uvicorn main:app --reload works locally',
+        ],
+        codeSnippet: `from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class ChatRequest(BaseModel):
+    message: str
+
+@app.post("/chat")
+def chat(req: ChatRequest):
+    answer = run_agent(req.message)
+    return {"answer": answer}`,
+      },
+      {
+        title: 'Deploy live',
+        description: 'Push to GitHub, deploy on Render free tier (or Railway/Fly).',
+        checklist: [
+          'requirements.txt with pinned versions',
+          'Environment vars set on host (OPENAI_API_KEY, etc.)',
+          'Live URL returns 200 on /docs',
+          'Test /chat from your phone',
+        ],
+      },
+      {
+        title: 'Evals + demo',
+        description: '3 test cases with expected behavior. 60-second demo video. README with architecture diagram.',
+        checklist: [
+          '3 eval questions with pass/fail criteria',
+          'Optional: LangSmith traces for debugging',
+          'README: setup, architecture, live URL',
+          '60s Loom/demo recording',
+        ],
+      },
     ],
     rubric: [
       'Live URL works when you share it',
       'Clear input → output demo',
-      'You can explain architecture in 2 minutes',
-      'Includes basic eval (3 test questions with expected behavior)',
+      'Explain architecture in 2 minutes',
+      'Includes 3 eval test cases with expected behavior',
+      'Would impress in a junior AI engineer interview',
     ],
   },
 ]
@@ -241,4 +363,13 @@ export function isCapstoneUnlocked(cap: CapstoneContent, completedNodes: string[
   const world = worlds.find((w) => w.id === cap.unlockAfterWorld)
   if (!world) return false
   return world.nodes.every((n) => completedNodes.includes(n.id))
+}
+
+export function getLevelTitle(completedNodes: number): string {
+  if (completedNodes >= 38) return 'Pro Agentic AI Engineer'
+  if (completedNodes >= 28) return 'Senior Builder'
+  if (completedNodes >= 18) return 'Agentic AI Engineer'
+  if (completedNodes >= 10) return 'LLM App Developer'
+  if (completedNodes >= 5) return 'Python AI Beginner'
+  return 'Fresh Starter'
 }

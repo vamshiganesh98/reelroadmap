@@ -1,5 +1,6 @@
 import type { ProgressState, StepKind } from '../types/content'
 import { STEP_ORDER } from '../types/content'
+import { XP_PER_CAPSTONE, XP_PER_STEP } from '../types/content'
 
 const STORAGE_KEY = 'ai-journey-progress-v1'
 
@@ -7,16 +8,28 @@ const defaultProgress = (): ProgressState => ({
   completedSteps: {},
   completedNodes: [],
   completedCapstones: [],
+  capstoneChecklists: {},
   streak: 0,
   lastActiveDate: '',
   lastNodeId: 'w1-n1',
+  xp: 0,
 })
+
+function migrate(raw: Partial<ProgressState>): ProgressState {
+  const base = defaultProgress()
+  return {
+    ...base,
+    ...raw,
+    capstoneChecklists: raw.capstoneChecklists ?? {},
+    xp: raw.xp ?? 0,
+  }
+}
 
 export function loadProgress(): ProgressState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return defaultProgress()
-    return { ...defaultProgress(), ...JSON.parse(raw) }
+    return migrate(JSON.parse(raw))
   } catch {
     return defaultProgress()
   }
@@ -42,13 +55,53 @@ function bumpStreak(state: ProgressState): ProgressState {
 
 export function completeStep(nodeId: string, step: StepKind): ProgressState {
   let state = bumpStreak(loadProgress())
-  const steps = new Set([...(state.completedSteps[nodeId] ?? []), step])
-  state.completedSteps = { ...state.completedSteps, [nodeId]: STEP_ORDER.filter((s) => steps.has(s)) }
+  const existing = state.completedSteps[nodeId] ?? []
+  const alreadyDone = existing.includes(step)
+
+  const steps = new Set([...existing, step])
+  state.completedSteps = {
+    ...state.completedSteps,
+    [nodeId]: STEP_ORDER.filter((s) => steps.has(s)),
+  }
   state.lastNodeId = nodeId
+
+  if (!alreadyDone) {
+    state.xp = (state.xp ?? 0) + XP_PER_STEP
+  }
 
   const allDone = STEP_ORDER.every((s) => steps.has(s))
   if (allDone && !state.completedNodes.includes(nodeId)) {
     state.completedNodes = [...state.completedNodes, nodeId]
+    state.xp = (state.xp ?? 0) + XP_PER_STEP
+  }
+
+  saveProgress(state)
+  return state
+}
+
+export function completeCapstone(capstoneId: string): ProgressState {
+  let state = bumpStreak(loadProgress())
+  if (state.completedCapstones.includes(capstoneId)) return state
+  state.completedCapstones = [...state.completedCapstones, capstoneId]
+  state.xp = (state.xp ?? 0) + XP_PER_CAPSTONE
+  saveProgress(state)
+  return state
+}
+
+export function toggleCapstoneChecklistItem(
+  capstoneId: string,
+  milestoneIndex: number,
+  itemIndex: number,
+  totalItems: number,
+): ProgressState {
+  const state = loadProgress()
+  const cap = state.capstoneChecklists[capstoneId] ?? {}
+  const items = cap[milestoneIndex] ?? Array(totalItems).fill(false)
+  const next = [...items]
+  next[itemIndex] = !next[itemIndex]
+  state.capstoneChecklists = {
+    ...state.capstoneChecklists,
+    [capstoneId]: { ...cap, [milestoneIndex]: next },
   }
   saveProgress(state)
   return state

@@ -22,6 +22,10 @@ export interface ExerciseContent {
   expectedOutput: string
   hints: string[]
   solution: string
+  /** Alternate acceptable outputs (trimmed match) */
+  acceptableOutputs?: string[]
+  /** pip packages needed — shown as setup tip */
+  setup?: string
 }
 
 export interface NodeContent {
@@ -48,13 +52,21 @@ export interface WorldContent {
   scaffolded?: boolean
 }
 
+export interface CapstoneMilestone {
+  title: string
+  description: string
+  checklist: string[]
+  codeSnippet?: string
+}
+
 export interface CapstoneContent {
   id: string
   title: string
   level: 'beginner' | 'intermediate' | 'final'
   emoji: string
   summary: string
-  milestones: string[]
+  techStack: string[]
+  milestones: CapstoneMilestone[]
   rubric: string[]
   unlockAfterWorld: string
   scaffolded?: boolean
@@ -64,9 +76,11 @@ export interface ProgressState {
   completedSteps: Record<string, StepKind[]>
   completedNodes: string[]
   completedCapstones: string[]
+  capstoneChecklists: Record<string, Record<number, boolean[]>>
   streak: number
   lastActiveDate: string
   lastNodeId: string | null
+  xp: number
 }
 
 export const STEP_ORDER: StepKind[] = ['watch', 'try', 'build', 'check']
@@ -77,3 +91,6 @@ export const STEP_LABELS: Record<StepKind, string> = {
   build: 'Build',
   check: 'Check',
 }
+
+export const XP_PER_STEP = 25
+export const XP_PER_CAPSTONE = 200

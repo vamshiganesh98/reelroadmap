@@ -17,6 +17,10 @@ export function HomePage() {
             <h1 className="text-xl font-bold sm:text-2xl">Learn AI by doing</h1>
           </div>
           <div className="flex flex-wrap items-center gap-3 text-sm">
+            <span className="rounded-full bg-indigo-900/60 px-3 py-1 text-indigo-200">
+              {stats.level}
+            </span>
+            <span className="rounded-full bg-slate-800 px-3 py-1">⚡ {stats.xp} XP</span>
             <span className="rounded-full bg-slate-800 px-3 py-1">
               🔥 {stats.streak} day streak
             </span>
@@ -107,6 +111,24 @@ export function HomePage() {
                 </Link>
               )
             })}
+          </div>
+        </section>
+
+        <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-400">
+          <h3 className="mb-3 font-semibold text-slate-200">Your path: beginner → pro</h3>
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4 text-xs">
+            <div className="rounded-lg bg-slate-950/50 p-2">
+              <span className="text-emerald-400">Worlds 1–2</span> — Python + neural nets
+            </div>
+            <div className="rounded-lg bg-slate-950/50 p-2">
+              <span className="text-blue-400">World 3</span> — scikit-learn ML
+            </div>
+            <div className="rounded-lg bg-slate-950/50 p-2">
+              <span className="text-amber-400">Worlds 4–5</span> — LLMs + LangChain RAG
+            </div>
+            <div className="rounded-lg bg-slate-950/50 p-2">
+              <span className="text-indigo-400">Worlds 6–8</span> — LangGraph agents → ship live
+            </div>
           </div>
         </section>
 
