@@ -1,6 +1,9 @@
 import type { CapstoneContent, NodeContent, WorldContent } from '../types/content'
 import { world1Nodes } from './world1'
 import { world2Nodes } from './world2'
+import { world6Nodes } from './world6'
+import { world7Nodes } from './world7'
+import { world8Nodes } from './world8'
 
 function scaffoldNode(
   id: string,
@@ -111,23 +114,33 @@ export const worlds: WorldContent[] = [
     ['w5-n3', 'Retrieve & Generate', '🔍'],
     ['w5-n4', 'World 5 Project: Doc Chatbot', '🏁'],
   ]),
-  scaffoldWorld('w6', 6, 'AI Agents', 'Tools & multi-step reasoning', '🤖', 'from-indigo-500 to-blue-600', [
-    ['w6-n1', 'What Is an Agent?', '🎭'],
-    ['w6-n2', 'Tool Calling', '🔧'],
-    ['w6-n3', 'Agent Loop', '🔁'],
-    ['w6-n4', 'World 6 Project: Task Agent', '🏁'],
-  ]),
-  scaffoldWorld('w7', 7, 'MCP & Tools', 'Connect external capabilities', '🔗', 'from-teal-500 to-green-600', [
-    ['w7-n1', 'What Is MCP?', '🌐'],
-    ['w7-n2', 'Build a Mini MCP Tool', '🛠️'],
-    ['w7-n3', 'World 7 Project: Connected Agent', '🏁'],
-  ]),
-  scaffoldWorld('w8', 8, 'Shipping It', 'Deploy, observe, evaluate', '🚀', 'from-fuchsia-500 to-violet-600', [
-    ['w8-n1', 'FastAPI Basics', '⚡'],
-    ['w8-n2', 'Deploy Something Live', '☁️'],
-    ['w8-n3', 'Evals & Observability', '👀'],
-    ['w8-n4', 'World 8 Project: Live AI App', '🏁'],
-  ]),
+  {
+    id: 'w6',
+    number: 6,
+    title: 'AI Agents',
+    subtitle: 'Tools & multi-step reasoning',
+    emoji: '🤖',
+    color: 'from-indigo-500 to-blue-600',
+    nodes: world6Nodes,
+  },
+  {
+    id: 'w7',
+    number: 7,
+    title: 'MCP & Tools',
+    subtitle: 'Connect external capabilities',
+    emoji: '🔗',
+    color: 'from-teal-500 to-green-600',
+    nodes: world7Nodes,
+  },
+  {
+    id: 'w8',
+    number: 8,
+    title: 'Shipping It',
+    subtitle: 'Deploy, observe, evaluate',
+    emoji: '🚀',
+    color: 'from-fuchsia-500 to-violet-600',
+    nodes: world8Nodes,
+  },
 ]
 
 export const capstones: CapstoneContent[] = [
